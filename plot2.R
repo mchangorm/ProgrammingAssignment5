@@ -54,7 +54,7 @@ electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
 ## And filter for correct dates
 electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
 
-#png("plot2.png",width=480,height=480)
+png("plot2.png",width=480,height=480)
 
 ## This produces a scatter plot which is obviously wrong
 ## Need to find the correct plot type
@@ -74,4 +74,4 @@ plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l",
 ## Then add the x-axis
 axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
 
-#dev.off()
+dev.off()
