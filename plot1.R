@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 
-## Getting and Cleaning Data Assignment
+## Electric Power Consumption Assignment
 
-## run_analysis.R
+## plot1.R
 ## by Mark Chang
 
 
