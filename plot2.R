@@ -48,8 +48,11 @@ electricity[,(column_modify1) := lapply(.SD, as.numeric), .SDcols = column_modif
 ## the time and combine the 2 separate columns together using the paste function
 ## and put them as a Date Time class which means we will need to use the as.POSIXct method
 electricity[, DateTime := paste(Date,Time)]
+#electricity[,DateTime] := lapply(.SD, strptime(paste(Date, Time), format = "%d/%m/%Y %H:%M:%S"), .SDcols = DateTime)
 electricity[, DateTime := as.POSIXct(DateTime,format="%d/%m/%Y %H:%M:%S")]
 electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
+
+
 
 ## And filter for correct dates
 electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
