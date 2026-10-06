@@ -49,7 +49,7 @@ electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
 
 electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
 
-#png("plot4.png",width=480, height=480)
+png("plot4.png",width=480, height=480)
 par(mfrow = c(2, 2))
 
 plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power",xaxt = "n")
@@ -68,4 +68,4 @@ legend("topright", legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),
 plot(x=electricity2[,DateTime],y=electricity2[,Global_reactive_power], type = "l", xlab="datetime", ylab="Global_reactive_power",xaxt = "n")
 axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
 
-#dev.off()
+dev.off()
