@@ -10,10 +10,10 @@ library("data.table")
 #library("lubridate")
 
 # Windows
-setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
+#setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
 
 # Mac
-# setwd("/Users/mchang/Projects/ProgrammingAssignment5")
+setwd("/Users/mchang/Projects/ProgrammingAssignment5")
 
 path <- getwd()
 datasetpath <- file.path(path,"dataset")
@@ -37,7 +37,7 @@ url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_co
 ## Noticed that there are a few records with ?. Need to record them
 ## as NA strings
 #electricity <- fread("dataset\\household_power_consumption.txt")
-electricity <- fread("dataset\\household_power_consumption.txt", sep = ";", na.strings = "?")
+electricity <- fread("dataset/household_power_consumption.txt", sep = ";", na.strings = "?")
 
 ## Change global_active_power to not print in scientific notation
 ## modify in place using example from https://r-statistics.co/base-lapply-in-R.html
