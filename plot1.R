@@ -59,7 +59,7 @@ electricity[,(column_modify2) := lapply(.SD, as.Date, "%d/%m/%Y"), .SDcols = col
 
 
 ## And filter for correct dates
-electricity2 <- electricity[(Date >= "2007-02-01") & (Date <= "2007-02-02" )]
+electricity2 <- electricity[(Date >= "2007-02-01") & (Date <= "2007-02-02")]
 
 png("plot1.png",width=480,height=480)
 
