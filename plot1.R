@@ -56,7 +56,8 @@ column_modify2 <- c("Date")
 #electricity[,(column_modify2) := lapply(.SD, as.Date), .SDcols = column_modify2]
 # Need to specify format for date!!
 electricity[,(column_modify2) := lapply(.SD, as.Date, "%d/%m/%Y"), .SDcols = column_modify2]
-
+## From other github
+#power$DateTime <- strptime(paste(power$Date, power$Time), format = "%d/%m/%Y %H:%M:%S")
 
 ## And filter for correct dates
 electricity2 <- electricity[(Date >= "2007-02-01") & (Date <= "2007-02-02")]
