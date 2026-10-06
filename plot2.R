@@ -7,7 +7,7 @@
 
 
 library("data.table")
-require(data.table)
+#library("lubridate")
 
 # Windows
 setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
@@ -49,9 +49,10 @@ electricity[,(column_modify1) := lapply(.SD, as.numeric), .SDcols = column_modif
 ## and put them as a Date Time class which means we will need to use the as.POSIXct method
 electricity[, DateTime := paste(Date,Time)]
 electricity[, DateTime := as.POSIXct(DateTime,format="%d/%m/%Y %H:%M:%S")]
+electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
 
 ## And filter for correct dates
-electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-02")]
+electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
 
 #png("plot2.png",width=480,height=480)
 
@@ -62,4 +63,15 @@ electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-0
 #plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l")
 
 ## Cool now we need to change the data labels and the axis labels
-plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)")
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)")
+
+## Need to figure out how to make the date in the abbreviated day of week
+## Got it! It is format(date,%a) and inserting them into plot
+## Plot the graph with xaxt = n so that x axis is not drawn
+## then add custom x-asis
+plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)",xaxt = "n")
+
+## Then add the x-axis
+axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
+
+#dev.off()
