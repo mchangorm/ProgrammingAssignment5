@@ -44,15 +44,22 @@ electricity <- fread("dataset\\household_power_consumption.txt", na.strings = "?
 column_modify1 <- c("Global_active_power")
 electricity[,(column_modify1) := lapply(.SD, as.numeric), .SDcols = column_modify1]
 
-## As suggested, change date column to Date class. Modify in place
-column_modify2 <- c("Date")
-#electricity[,(column_modify2) := lapply(.SD, as.Date), .SDcols = column_modify2]
-# Need to specify format for date!!
-electricity[,(column_modify2) := lapply(.SD, as.Date, "%d/%m/%Y"), .SDcols = column_modify2]
-
+## As suggested, change date column to Date class. This time, we need to take into account
+## the time and combine the 2 separate columns together using the paste function
+## and put them as a Date Time class which means we will need to use the as.POSIXct method
+electricity[, DateTime := paste(Date,Time)]
+electricity[, DateTime := as.POSIXct(DateTime,format="%d/%m/%Y %H:%M:%S")]
 
 ## And filter for correct dates
-electricity2 <- electricity[(Date >= "2007-02-01") & (Date <= "2007-02-02" )]
+electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-02")]
 
-png("plot2.png",width=480,height=480)
+#png("plot2.png",width=480,height=480)
 
+## This produces a scatter plot which is obviously wrong
+## Need to find the correct plot type
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power])
+## Found it! It is type = "l" for a line plot.
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l")
+
+## Cool now we need to change the data labels and the axis labels
+plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)")
