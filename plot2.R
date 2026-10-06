@@ -13,7 +13,7 @@ library("data.table")
 setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
 
 # Mac
-# setwd("/Users/mchang/Projects/ProgrammingAssignment4")
+# setwd("/Users/mchang/Projects/ProgrammingAssignment5")
 
 path <- getwd()
 datasetpath <- file.path(path,"dataset")
