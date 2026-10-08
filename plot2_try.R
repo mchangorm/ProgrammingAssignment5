@@ -2,8 +2,9 @@
 
 ## Electric Power Consumption Assignment
 
-## plot3.R
+## plot2.R
 ## by Mark Chang
+
 
 library("data.table")
 #library("lubridate")
@@ -43,25 +44,32 @@ electricity <- fread("dataset\\household_power_consumption.txt", sep = ";", na.s
 column_modify1 <- c("Global_active_power")
 electricity[,(column_modify1) := lapply(.SD, as.numeric), .SDcols = column_modify1]
 
+## As suggested, change date column to Date class. This time, we need to take into account
+## the time and combine the 2 separate columns together using the paste function
+## and put them as a Date Time class which means we will need to use the as.POSIXct method
 electricity[, DateTime := paste(Date,Time)]
 electricity[, DateTime := as.POSIXct(DateTime,format="%d/%m/%Y %H:%M:%S")]
-electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
+electricity[, DayWeek := weekdays(DateTime, abbreviate = TRUE)]
 
+## And filter for correct dates
 electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
 
-png("plot3.png",width=480, height=480)
+png("plot2_try.png",width=480,height=480)
 
-plot(x=electricity2[,DateTime],y=electricity2[,Sub_metering_1], type = "n", xlab="", ylab="Energy sub metering")
+## This produces a scatter plot which is obviously wrong
+## Need to find the correct plot type
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power])
+## Found it! It is type = "l" for a line plot.
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l")
 
+## Cool now we need to change the data labels and the axis labels
+#plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)")
 
-lines(x=electricity2[,DateTime],y=electricity2[,Sub_metering_1], type = "l", col = "Black")
+## Need to figure out how to make the date in the abbreviated day of week
+## Got it! It is format(date,%a) and inserting them into plot
+## Plot the graph with xaxt = n so that x axis is not drawn
+## then add custom x-asis
+plot(x=electricity2[,DayWeek],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)")
 
-lines(x=electricity2[,DateTime],y=electricity2[,Sub_metering_2], type = "l", col = "Red")
-
-lines(x=electricity2[,DateTime],y=electricity2[,Sub_metering_3], type = "l", col = "Blue")
-
-axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
-
-legend("topright", legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("Black","Red","Blue"),lty=c(1,1), lwd=c(1,1))
 
 dev.off()

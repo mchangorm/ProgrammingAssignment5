@@ -10,10 +10,10 @@ library("data.table")
 #library("lubridate")
 
 # Windows
-#setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
+setwd("C:\\Users\\mchang\\Projects\\ProgrammingAssignment5")
 
 # Mac
-setwd("/Users/mchang/Projects/ProgrammingAssignment5")
+#setwd("/Users/mchang/Projects/ProgrammingAssignment5")
 
 path <- getwd()
 datasetpath <- file.path(path,"dataset")
@@ -37,7 +37,7 @@ url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_co
 ## Noticed that there are a few records with ?. Need to record them
 ## as NA strings
 #electricity <- fread("dataset\\household_power_consumption.txt")
-electricity <- fread("dataset/household_power_consumption.txt", sep = ";", na.strings = "?")
+electricity <- fread("dataset\\household_power_consumption.txt", sep = ";", na.strings = "?")
 
 ## Change global_active_power to not print in scientific notation
 ## modify in place using example from https://r-statistics.co/base-lapply-in-R.html
@@ -48,11 +48,8 @@ electricity[,(column_modify1) := lapply(.SD, as.numeric), .SDcols = column_modif
 ## the time and combine the 2 separate columns together using the paste function
 ## and put them as a Date Time class which means we will need to use the as.POSIXct method
 electricity[, DateTime := paste(Date,Time)]
-#electricity[,DateTime] := lapply(.SD, strptime(paste(Date, Time), format = "%d/%m/%Y %H:%M:%S"), .SDcols = DateTime)
 electricity[, DateTime := as.POSIXct(DateTime,format="%d/%m/%Y %H:%M:%S")]
 electricity[, DayWeek := as.factor(weekdays(DateTime, abbreviate = TRUE))]
-
-
 
 ## And filter for correct dates
 electricity2 <- electricity[(DateTime >= "2007-02-01") & (DateTime <= "2007-02-03")]
