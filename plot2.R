@@ -72,6 +72,9 @@ png("plot2.png",width=480,height=480)
 plot(x=electricity2[,DateTime],y=electricity2[,Global_active_power], type = "l", xlab="", ylab="Global Active Power (kilowatts)",xaxt = "n")
 
 ## Then add the x-axis
-axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
+#axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
+axisticks <- as.POSIXct(c("2007-02-01 00:00:00", "2007-02-02 00:00:00", "2007-02-03 00:00:00"))
+axis.POSIXct(1, at = axisticks, format = "%a")
+
 
 dev.off()

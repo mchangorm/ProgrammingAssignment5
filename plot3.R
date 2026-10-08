@@ -60,7 +60,9 @@ lines(x=electricity2[,DateTime],y=electricity2[,Sub_metering_2], type = "l", col
 
 lines(x=electricity2[,DateTime],y=electricity2[,Sub_metering_3], type = "l", col = "Blue")
 
-axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
+#axis(1, at = electricity2[,DateTime], labels = electricity2[,DayWeek])
+axisticks <- as.POSIXct(c("2007-02-01 00:00:00", "2007-02-02 00:00:00", "2007-02-03 00:00:00"))
+axis.POSIXct(1, at = axisticks, format = "%a")
 
 legend("topright", legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("Black","Red","Blue"),lty=c(1,1), lwd=c(1,1))
 
